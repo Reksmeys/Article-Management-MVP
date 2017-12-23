@@ -1,0 +1,6 @@
+framework module Pods_AKNHomework {
+  umbrella header "Pods-AKNHomework-umbrella.h"
+
+  export *
+  module * { export * }
+}
