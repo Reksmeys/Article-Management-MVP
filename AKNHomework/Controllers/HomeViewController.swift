@@ -13,7 +13,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var refresh: UIRefreshControl?
     
     @IBOutlet weak var pageControl: UIPageControl!
-    
     @IBOutlet weak var slideScrollView: UIScrollView!
     @IBOutlet weak var articleTableView: UITableView!
     var articlePresenter: ArticlePresenter?
@@ -23,37 +22,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //pull to get more article
     var newArticle = 0
     var indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+
+    override func viewWillAppear(_ animated: Bool) {
+         self.articlePresenter?.getArticle(page: page, limit: 15)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let labelOne = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 100))
-        let labelTwo = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 100))
-        let labelThree = UILabel(frame: CGRect(x: 20, y: 20, width: 100, height: 100))
         SVProgressHUD.show(withStatus: "Loading..")
         articles = [Article]()
         articlePresenter = ArticlePresenter()
         refresh = UIRefreshControl()
         self.slideScrollView.delegate = self
-        
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-       
         self.articlePresenter?.delegate = self
-        self.articlePresenter?.getArticle(page: page, limit: 15)
+       
         self.articleTableView.reloadData()
         self.articleTableView.addSubview(refresh!)
         refresh?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresh?.tintColor = UIColor.purple
         refresh?.addTarget(self, action: #selector(didRefreshData), for: .valueChanged)
+       //---------------scroll view--------------
        
-      
+
+       
     }
-    //if scroll view is scrolled
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        print(scrollView.contentOffset)
-        pageControl.currentPage = Int(scrollView.contentOffset.x / CGFloat(414))
-        
-    }
+
+
 
     @objc func didRefreshData(){
         page = 1
@@ -91,7 +86,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.articles = []
             self.refresh?.endRefreshing()
         }
-        self.articles = articles + articles
+        self.articles = self.articles! + articles
         DispatchQueue.main.async {
             self.articleTableView.reloadData()
         }
@@ -121,7 +116,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if articles?[indexPath.row].image == nil {
             cell.imageURL = "http://api-ams.me:80/image-thumbnails/thumbnail-33101c96-b6f9-40db-b0ff-503c50792ae8.jpg"
         }else{
-
+            cell.imageURL = articles?[indexPath.row].image!
             cell.configureCellHomePage(articles: articles![indexPath.row])
         }
        // cell.imageURL = articles?[indexPath.row].image!
@@ -134,7 +129,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //when table cell is clicked
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = storyboard?.instantiateViewController(withIdentifier: "detailStoryBoard") as! DetailViewController
+        print("when click cell: \(articles?[indexPath.row].title)")
         detail.titleArticle = articles?[indexPath.row].title!
+        print("when click cell: \(detail.titleArticle)")
         detail.articleDatail = articles?[indexPath.row].description!
         if articles?[indexPath.row].image == nil{
             detail.profile = "http://api-ams.me:80/image-thumbnails/thumbnail-33101c96-b6f9-40db-b0ff-503c50792ae8.jpg"
@@ -153,7 +150,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("article for edit\(article)")
             let edits = self.storyboard?.instantiateViewController(withIdentifier: "detailStoryBoard") as! DetailViewController
             edits.articleDatail = self.articles?[indexPath.row].description
-            edits.detailArticle = article
+            edits.titleArticle = self.articles?[indexPath.row].title!
+            if self.articles?[indexPath.row].image == nil{
+                self.articles?[indexPath.row].image = "http://api-ams.me:80/image-thumbnails/thumbnail-33101c96-b6f9-40db-b0ff-503c50792ae8.jpg"
+            }else{
+                 edits.detailArticle = article
+            }
             self.navigationController?.pushViewController(edits, animated: true)
             
         }

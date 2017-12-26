@@ -149,6 +149,7 @@
 		FE9D396C1FEBB460002EC37C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE9D39711FEBB82A002EC37C /* Nib */,
 				FECFE3D91FEBA1C7002BA6FC /* LaunchScreen.storyboard */,
 				FECFE3D41FEBA1C7002BA6FC /* Main.storyboard */,
 			);
@@ -184,7 +185,6 @@
 		FECFE3CF1FEBA1C7002BA6FC /* AKNHomework */ = {
 			isa = PBXGroup;
 			children = (
-				FE9D39711FEBB82A002EC37C /* Nib */,
 				FE9D39651FEBAC89002EC37C /* Presenters */,
 				FE9D395A1FEBA295002EC37C /* Models */,
 				FE9D39591FEBA26F002EC37C /* Controllers */,

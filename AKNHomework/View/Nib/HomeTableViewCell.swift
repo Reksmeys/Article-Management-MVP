@@ -30,19 +30,33 @@ class HomeTableViewCell: UITableViewCell {
     func configureCellHomePage(articles: Article){
         titleLabel.text = articles.title
         dateLabel.text = articles.createdDate
-        if articles.image == nil{
-            self.profileImageView.image = UIImage(named: "http://api-ams.me:80/image-thumbnails/thumbnail-33101c96-b6f9-40db-b0ff-503c50792ae8.jpg")
-        }else{
-            if let url = URL(string: articles.image!) {
+            if let url = URL(string: imageURL!) {
                 self.profileImageView.kf.setImage(with: url)
             }
-        }
+        
        
 
     }
     @IBAction func savePhotoButton(_ sender: Any) {
         print("save button is clicked in homecell")
-        saveImage(img: imageURL!)
+       
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:
+        {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        let selectPhotoAction = UIAlertAction(title: "Select Photo", style: .default, handler:
+        {
+            (alert: UIAlertAction!) -> Void in
+            print("Select Photo")
+            
+        })
+        
+        optionMenu.addAction(cancelAction)
+        optionMenu.addAction(selectPhotoAction)
+        
+        //self.present(optionMenu, animated: true, completion: nil)
     }
  
     func saveImage(img: String){

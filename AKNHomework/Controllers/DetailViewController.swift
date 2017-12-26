@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import Photos
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var titleArticle: String?
@@ -20,20 +21,27 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var saveButtton: UIBarButtonItem!
     @IBOutlet weak var articleDetailTextView: UITextView!
     
-    @IBOutlet weak var titleDetailTextField: UITextField!
+   
+    @IBOutlet weak var titleDetailTextView: UITextView!
+    
     @IBOutlet weak var profileDetailImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         articlePresenter = ArticlePresenter()
         self.articlePresenter?.delegate = self
         self.articleDetailTextView.delegate = self
-        navigationController?.navigationBar.prefersLargeTitles = true
+//      navigationController?.navigationBar.prefersLargeTitles = true
+        articleDetailTextView.isScrollEnabled = true
+        //articleDetailTextView.isEditable = false
+        //articleDetailTextView.showsVerticalScrollIndicator = true
         navigationItem.title = "Detail"
         
         
         if status == "viewDetail" {
-            titleDetailTextField.text = titleArticle
+            print("when view detail: \(titleArticle!)")
+            titleDetailTextView.text = titleArticle!
+            print("title article: \(titleArticle)")
             articleDetailTextView.text = articleDatail
             if let url = URL(string: (profile!)) {
                 self.profileDetailImageView.kf.setImage(with: url)
@@ -43,7 +51,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             saveButtton.isEnabled = false
         }else{
             if detailArticle != nil{
-                titleDetailTextField.text = titleArticle
+                print("when edit: \(titleArticle)")
+                titleDetailTextView.text = titleArticle
                 articleDetailTextView.text = articleDatail
                 if let url = URL(string: (detailArticle?.image)!) {
                     self.profileDetailImageView.kf.setImage(with: url)
@@ -68,7 +77,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }else{
             article.id = 0
         }
-        article.title = self.titleDetailTextField.text
+        article.title = self.titleDetailTextView.text
         article.description = self.articleDetailTextView.text
         
         self.articlePresenter?.insertUpdateArticle(article: article, img: image!)
@@ -94,9 +103,35 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         })
+        let saveAction = UIAlertAction(title: "Save Photo", style: .default, handler:
+        {
+            (alert: UIAlertAction!) -> Void in
+            print("save")
+             let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+             switch photoAuthorizationStatus {
+             case .authorized :
+             UIImageWriteToSavedPhotosAlbum(self.profileDetailImageView.image!, nil, nil, nil)
+             self.didResponseSave()
+             print("save photo")
+             break
+             case .notDetermined:
+             PHPhotoLibrary.requestAuthorization({ (newStatus) in
+             if newStatus == PHAuthorizationStatus.authorized {
+             UIImageWriteToSavedPhotosAlbum(self.profileDetailImageView.image!, nil, nil, nil)
+             self.didResponseSave()
+            print("save photo")
+             }
+             })
+             case .restricted: break
+             case .denied: break
+             }
+            
+            
+        })
         
         optionMenu.addAction(cancelAction)
         optionMenu.addAction(selectPhotoAction)
+        optionMenu.addAction(saveAction)
    
         self.present(optionMenu, animated: true, completion: nil)
         
@@ -135,5 +170,13 @@ extension DetailViewController: UITextViewDelegate{
             articleDetailTextView.text = ""
             articleDetailTextView.textColor = UIColor.black
         }
+    }
+    func didResponseSave(){
+        let alert = UIAlertController(title: "Save Successully", message: "Success", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
     }
 }
