@@ -46,7 +46,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             if let url = URL(string: (profile!)) {
                 self.profileDetailImageView.kf.setImage(with: url)
             }
-            articleDetailTextView.isUserInteractionEnabled = false
+           // articleDetailTextView.isUserInteractionEnabled = false
             articleDetailTextView.isScrollEnabled = true
             saveButtton.isEnabled = false
         }else{

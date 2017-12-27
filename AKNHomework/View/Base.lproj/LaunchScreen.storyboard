@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,19 +19,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="angle-mask.png" translatesAutoresizingMaskIntoConstraints="NO" id="P8a-XR-MJx">
-                                <rect key="frame" x="40" y="140" width="294" height="204"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="សកម្មភាពរបស់យើងមិនអាចកើតឡើងបាន" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhe-i6-v8h">
-                                <rect key="frame" x="40" y="385" width="294" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ពត៏មានសម្រាប់អ្នក" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhe-i6-v8h">
+                                <rect key="frame" x="40" y="512" width="294" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Tmy-jE-9dw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="news.khmeracademy.org" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMZ-3I-5LF">
+                                <rect key="frame" x="61" y="579" width="273" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-App-60x60" translatesAutoresizingMaskIntoConstraints="NO" id="P8a-XR-MJx">
+                                <rect key="frame" x="16" y="181" width="343" height="285"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="343" id="CBZ-sS-F4Y"/>
+                                    <constraint firstAttribute="width" secondItem="P8a-XR-MJx" secondAttribute="height" multiplier="343:285" id="fzJ-hU-4rP"/>
+                                    <constraint firstAttribute="height" constant="285" id="wbE-8b-YCL"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="pMZ-3I-5LF" firstAttribute="leading" secondItem="dhe-i6-v8h" secondAttribute="trailing" constant="-273" id="9tt-Kp-0d6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pMZ-3I-5LF" secondAttribute="trailing" constant="41" id="ICI-u1-GLf"/>
+                            <constraint firstItem="dhe-i6-v8h" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="La5-nZ-ule"/>
+                            <constraint firstItem="pMZ-3I-5LF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="61" id="MpW-yw-u3d"/>
+                            <constraint firstItem="P8a-XR-MJx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="TlD-me-y1x"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P8a-XR-MJx" secondAttribute="trailing" constant="16" id="a1g-0b-F87"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dhe-i6-v8h" secondAttribute="trailing" id="ePs-ie-P0z"/>
+                            <constraint firstItem="dhe-i6-v8h" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hBw-rF-ti4"/>
+                            <constraint firstItem="P8a-XR-MJx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="161" id="sRQ-nS-4hZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="P8a-XR-MJx" secondAttribute="bottom" constant="201" id="xfZ-xp-rbh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pMZ-3I-5LF" secondAttribute="bottom" constant="58" id="y3c-G0-y1m"/>
+                            <constraint firstItem="pMZ-3I-5LF" firstAttribute="top" secondItem="dhe-i6-v8h" secondAttribute="bottom" constant="32" id="yzz-m9-b7a"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -40,6 +67,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="angle-mask.png" width="100" height="100"/>
+        <image name="Icon-App-60x60" width="60" height="60"/>
     </resources>
 </document>

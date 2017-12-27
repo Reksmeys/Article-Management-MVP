@@ -105,13 +105,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     // ==================== conform to tableview===========================
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of array \(articles?.count)")
+       // print("number of array \(articles?.count)")
         return (articles?.count)!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! HomeTableViewCell
-        print("image url: \(articles?[indexPath.row].image)")
+       // print("image url: \(articles?[indexPath.row].image)")
         
         if articles?[indexPath.row].image == nil {
             cell.imageURL = "http://api-ams.me:80/image-thumbnails/thumbnail-33101c96-b6f9-40db-b0ff-503c50792ae8.jpg"
@@ -119,20 +119,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.imageURL = articles?[indexPath.row].image!
             cell.configureCellHomePage(articles: articles![indexPath.row])
         }
-       // cell.imageURL = articles?[indexPath.row].image!
-        cell.calenderImageView.layer.cornerRadius = 10
-        cell.calenderImageView.clipsToBounds = true
-        cell.calenderImageView.backgroundColor = UIColor.blue
+     
    
         return cell
     }
     //when table cell is clicked
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = storyboard?.instantiateViewController(withIdentifier: "detailStoryBoard") as! DetailViewController
-        print("when click cell: \(articles?[indexPath.row].title)")
+       // print("when click cell: \(articles?[indexPath.row].title)")
         detail.titleArticle = articles?[indexPath.row].title!
-        print("when click cell: \(detail.titleArticle)")
-        detail.articleDatail = articles?[indexPath.row].description!
+        print("did select row: \(articles?[indexPath.row].description)")
+        if articles?[indexPath.row].description == nil{
+            detail.articleDatail = "អត់មានទិន្នន័យទេល្មមៗបានហើយ"
+        }else{
+             detail.articleDatail = articles?[indexPath.row].description!
+        }
+       
         if articles?[indexPath.row].image == nil{
             detail.profile = "http://api-ams.me:80/image-thumbnails/thumbnail-33101c96-b6f9-40db-b0ff-503c50792ae8.jpg"
         }else{
@@ -147,7 +149,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let edit = UITableViewRowAction(style: .normal, title: "edit") { (action, indexPath) in
             let article = self.articles?[indexPath.row]
-            print("article for edit\(article)")
+           // print("article for edit\(article)")
             let edits = self.storyboard?.instantiateViewController(withIdentifier: "detailStoryBoard") as! DetailViewController
             edits.articleDatail = self.articles?[indexPath.row].description
             edits.titleArticle = self.articles?[indexPath.row].title!
@@ -161,7 +163,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         let delete = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
          
-            print("id :\(self.articles?[indexPath.row].id)")
+           // print("id :\(self.articles?[indexPath.row].id)")
             self.articlePresenter?.deleteArticle(id: (self.articles?[indexPath.row].id)!)
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: "Success", message: "Delete Successully", preferredStyle: .alert)

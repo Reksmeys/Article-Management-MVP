@@ -29,7 +29,13 @@ class HomeTableViewCell: UITableViewCell {
     }
     func configureCellHomePage(articles: Article){
         titleLabel.text = articles.title
-        dateLabel.text = articles.createdDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let createdDate = dateFormatter.date(from: articles.createdDate!)
+        print(createdDate!)
+        let dateF = DateFormatter()
+        dateF.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        dateLabel.text = dateF.string(from: createdDate!)
             if let url = URL(string: imageURL!) {
                 self.profileImageView.kf.setImage(with: url)
             }
@@ -37,6 +43,7 @@ class HomeTableViewCell: UITableViewCell {
        
 
     }
+
     @IBAction func savePhotoButton(_ sender: Any) {
         print("save button is clicked in homecell")
        
